@@ -24,14 +24,14 @@ export const createUser = async (req, res) => {
   if (!name || !lastname || !email || !password)
     return res.status(400).json({ message: "Missing fields" });
 
-  await user.findOne({ email }).then(async (user) => {
-    if (user)
+  await user.findOne({ email }).then(async (data) => {
+    if (data)
       return res.status(400).json({ message: "This email is already taken" });
 
     await user
       .create(req.body)
-      .then((user) => {
-        res.status(201).json({ token: generateToken(user, "24h") });
+      .then((data) => {
+        res.status(201).json({ token: generateToken(data, "24h") });
       })
       .catch((error) => res.status(400).json({ error }));
   });
