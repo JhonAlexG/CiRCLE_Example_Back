@@ -13,7 +13,7 @@ export const loginUser = async (req, res) => {
 
       const token = generateToken(user, "24h");
 
-      res.status(200).json({ token });
+      res.status(200).json({ token, userType: user.type });
     })
     .catch((error) => res.status(400).json({ error }));
 };
@@ -43,5 +43,7 @@ export const updateUser = async (req, res) => {
   if (!name || !lastname || !email || !password)
     return res.status(400).json({ message: "Missing fields" });
 };
+
+
 
 export const deleteUser = async (req, res) => {};

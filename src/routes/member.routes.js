@@ -6,16 +6,18 @@ import {
     updateMember,
     deleteMember,
 } from "../controllers/member.controllers.js";
+import { verifyToken } from "../JWT/jwt.js";
+import { checkStaff } from "../authentication/checkers.js";
 
 const router = Router();
 
-router.get("/members", getMembers);
-router.get("/members/:id", getMember);
+router.get("/members", verifyToken, getMembers);
+router.get("/members/:id", verifyToken, getMember);
 
-router.post("/members", createMember);
+router.post("/members", verifyToken, checkStaff, createMember);
 
-router.put("/members/:id", updateMember);
+router.put("/members/:id", verifyToken, checkStaff, updateMember);
 
-router.delete("/members/:id", deleteMember);
+router.delete("/members/:id", verifyToken, checkStaff, deleteMember);
 
 export { router as memberRoutes };

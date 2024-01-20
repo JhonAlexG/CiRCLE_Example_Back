@@ -6,16 +6,18 @@ import {
     updateSong,
     deleteSong,
 } from "../controllers/song.controller.js";
+import { verifyToken } from "../JWT/jwt.js";
+import { checkStaff } from "../authentication/checkers.js";
 
 const router = Router();
 
-router.get("/songs", getSongs);
-router.get("/songs/:id", getSong);
+router.get("/songs", verifyToken, getSongs);
+router.get("/songs/:id", verifyToken, getSong);
 
-router.post("/songs", createSong);
+router.post("/songs", verifyToken, checkStaff, createSong);
 
-router.put("/songs/:id", updateSong);
+router.put("/songs/:id", verifyToken, checkStaff, updateSong);
 
-router.delete("/songs/:id", deleteSong);
+router.delete("/songs/:id", verifyToken, checkStaff, deleteSong);
 
 export { router as songRoutes };
